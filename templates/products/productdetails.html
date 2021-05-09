@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+ <!-- Product Details -->
+ <section class="section product-detail">
+    <div class="details container-md">
+      <div class="left">
+        <div class="main">
+          <img src="{{ product_details.image.url }}" alt="">
+        </div>
+        <div class="thumbnails">
+          <div class="thumbnail">
+            <img src="./images/pic1.jpg" alt="">
+          </div>
+          <div class="thumbnail">
+            <img src="./images/pic2.jpg" alt="">
+          </div>
+          <div class="thumbnail">
+            <img src="./images/pic3.jpg" alt="">
+          </div>
+          <div class="thumbnail">
+            <img src="./images/pic4.jpg" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="right">
+        <span>{{product_details.category }}</span>
+        <h1>{{ product_details.title }}</h1>
+        <div class="price">{{ product_details.price }}</div>
+        <form>
+          <div>
+            <select>
+              <option value="Select Size" selected disabled>Select Size</option>
+              <option value="1">32</option>
+              <option value="2">42</option>
+              <option value="3">52</option>
+              <option value="4">62</option>
+            </select>
+            <span><i class='bx bx-chevron-down'></i></span>
+          </div>
+        </form>
+
+        <form class="form">
+          <input type="text" placeholder="1">
+          <a href="cart.html" class="addCart">Add To Cart</a>
+        </form>
+        <h3>Product Detail</h3>
+        <p>{{ product_details.description }}</p>
+
+        <div class="nav tag-cloud">
+          <a href="{% url 'products:update_product' product_details.pk %}">Update Product</a>
+          <a href="{% url 'products:delete_product' product_details.pk %}">Delete Product</a>
+       
+
+      </div>
+
+
+      </div>
+    </div>
+  </section>
+
+{% endblock content %}

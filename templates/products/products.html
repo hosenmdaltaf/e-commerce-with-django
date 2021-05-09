@@ -1,0 +1,44 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+{% include 'products/navbar.html' %}
+
+<section class="section featured">
+    <div class="title">
+      <h1>Latest Products</h1>
+    </div>
+
+    <div class="product-center container">
+
+        {% for product in products %}
+      <div class="product">
+        <div class="product-header">
+          <img src="{{ product.image.url }}" alt="">
+
+          <ul class="icons">
+            <span><i class="bx bx-heart"></i></span>
+            <span><i class="bx bx-shopping-bag"></i></span>
+            <span><i class="bx bx-search"></i></span>
+          </ul>
+        </div>
+        <div class="product-footer">
+          <a href="{% url 'products:productdetails' product.pk %}"><h3>{{ product.title }}</h3></a>
+          <div class="rating">
+            <i class="bx bxs-star"></i>
+            <i class="bx bxs-star"></i>
+            <i class="bx bxs-star"></i>
+            <i class="bx bxs-star"></i>
+            <i class="bx bx-star"></i>
+          </div>
+          <h4 class="price">{{ product.price }}</h4>
+        </div>
+      </div>
+      {% endfor %}
+     
+ 
+    </div>
+  </section>
+    
+{% endblock content %}
