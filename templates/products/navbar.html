@@ -20,10 +20,13 @@
 
         <ul class="nav-list">
           <li class="nav-item">
-            <a href="#home" class="nav-link scroll-link">Home</a>
+            <a href="{% url 'forntpage:home' %}" class="nav-link scroll-link">Home</a>
           </li>
           <li class="nav-item">
-            <a href="product.html" class="nav-link">Products</a>
+            <a href="{% url 'products:allproduct' %}" class="nav-link">Products</a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'products:favourite_list' %}" class="nav-link scroll-link">Favourties</a>
           </li>
           <li class="nav-item">
             <a href="#about" class="nav-link scroll-link">About</a>

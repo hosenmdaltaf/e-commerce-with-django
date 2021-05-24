@@ -43,7 +43,7 @@
 
         <form class="form">
           <input type="text" placeholder="1">
-          <a href="cart.html" class="addCart">Add To Cart</a>
+          <a href="{% url 'cart:cart_add' product_details.id %} class="addCart">Add To Cart</a>
         </form>
         <h3>Product Detail</h3>
         <p>{{ product_details.description }}</p>
