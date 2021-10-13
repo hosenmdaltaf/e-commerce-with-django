@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+{% include 'products/navbar.html' %}
+
+<h1 style="text-align: center; background-color: rgb(233, 236, 239);">❤ Wellcome Back ❤</h1>  
+    <form class="site-form" action="{% url 'accounts:login'  %}" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+              {{ form|crispy }}
+            </div>
+            
+          </div>
+     
+          <button class="btn btn-success col-sm-2 offset-md-5 mt-3" type="submit">Sign In</button>
+        </form>
+    </form>
+
+    <h2 class="col-md-6 offset-md-3 mt-5">Don't have account!<a href="{% url 'accounts:signup' %}">Signup</a></h2> 
+
+
+{% endblock%}
+     
+       
+             
+      

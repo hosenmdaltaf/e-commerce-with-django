@@ -20,6 +20,9 @@ class Category(models.Model):
     def get_absolute_url(self):
         return reverse('shop:product_list_by_category', args=[self.slug])
 
+    def get_absolute_url(self):
+        return reverse("category_detail", kwargs={"pk": self.pk})
+
 
 class Product(models.Model):
     title = models.CharField(max_length=100)
@@ -30,7 +33,7 @@ class Product(models.Model):
                                  on_delete=models.CASCADE)
     # label = models.CharField(choices=LABEL_CHOICES, max_length=1)
     #feactured
-    slug = models.SlugField()
+    # slug = models.SlugField()
     description = models.TextField()
     image = models.ImageField(upload_to='product_img',default='/static/images/cover.jpg')
     available = models.BooleanField(default=True)

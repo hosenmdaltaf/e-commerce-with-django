@@ -31,19 +31,19 @@
           <img src="{{ product.image.url }}" alt="">
 
           <ul class="icons">
-            <span>
-              {% if product.favourites %}
-        
-                <a href="{% url 'products:favourite_list' %}" class=""><i class="bx bx-heart"></i></a>
-           
-              {% else %}
-       
-                <a href="{% url 'products:favourite_add' product.id %}" class=""><i class="bx bx-heart"></i></a>
-           
+
+            {% if request.user.is_authenticated  %}
+          
+            {% if favourites %}
+            <a href="{% url 'products:favourite_list' %}" class=""><i class="bx bx-heart"></i> </a>
+            {% else %} 
+             <a href="{% url 'products:favourite_add' product.id %}" class=""> <i class="bx bx-heart"></i> </a>
             {% endif %}
               
-              
-              <i class="bx bx-heart"></i></span>
+            {% endif %}
+
+
+
             <span><i class="bx bx-shopping-bag"></i></span>
             <span><i class="bx bx-search"></i></span>
           </ul>
@@ -63,6 +63,75 @@
       {% endfor %}
     </div>
 </section>
+
+
+
+
+
+
+<!--Pagination seaction---------------------------------------------------------------------> 
+
+
+    <!--Pagination-->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          {% if products.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ products.previous_page_number }}">Previous</a>
+            </li>
+          {% else %}
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+            </li>
+          {% endif %}
+          {% for i in products.paginator.page_range %}
+            {% if products.number == i %}
+              <li class="page-item active" aria-current="page">
+                <span class="page-link">
+                  {{ i }}
+                
+                </span>
+              </li>
+            {% else %}
+              <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+          {% endfor %}
+          {% if products.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ products.next_page_number }}">Next</a>
+            </li>
+          {% else %}
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next</a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+      <!--end of Pagination-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <section class="pagination">
     <div class=" container">

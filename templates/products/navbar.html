@@ -25,25 +25,41 @@
           <li class="nav-item">
             <a href="{% url 'products:allproduct' %}" class="nav-link">Products</a>
           </li>
-          <li class="nav-item">
-            <a href="{% url 'products:favourite_list' %}" class="nav-link scroll-link">Favourties</a>
-          </li>
+         
           <li class="nav-item">
             <a href="#about" class="nav-link scroll-link">About</a>
           </li>
           <li class="nav-item">
             <a href="#contact" class="nav-link scroll-link">Contact</a>
           </li>
+       
+          {% if request.user.is_authenticated  %}
           <li class="nav-item">
-            <a href="#account" class="nav-link scroll-link">Account</a>
+            <li class="nav-item">
+              <a href="{% url 'products:favourite_list' %}" class="nav-link scroll-link">Favourties</a>
+            </li>
+            <a href="{% url 'accounts:my_profile' user.profile.pk  %}" class="nav-link scroll-link">Account</a>
           </li>
           <li class="nav-item">
-            <a href="cart.html" class="nav-link icon"><i class="bx bx-shopping-bag"></i></a>
+            <a href="{% url 'accounts:logout' %}" class="nav-link scroll-link">Logout</a>
           </li>
+          {% else %}
+
+          <li class="nav-item">
+            <a href="{% url 'accounts:signup' %}" class="nav-link scroll-link">Register</a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'accounts:login' %}" class="nav-link scroll-link">Login</a>
+          </li>
+          {% endif %}
+          <li class="nav-item">
+            <a href="{% url 'orders:cart' %}" class="nav-link icon"><i class="bx bx-shopping-bag"></i></a> 
+            </li>
+     
         </ul>
       </div>
 
-      <a href="cart.html" class="cart-icon">
+      <a href="#" class="cart-icon">
         <i class="bx bx-shopping-bag"></i>
       </a>
 

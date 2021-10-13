@@ -4,16 +4,22 @@ from django.views.generic import(
     ListView,DetailView,UpdateView,CreateView,DeleteView
 ) 
 from products.models import Product
+from django.core.paginator import Paginator
 
+    
 
-# def home(request):
-#     return render(request, 'products/home.html')
+def home(request):
+    products=Product.objects.all()
+    paginator = Paginator( products , 3) # Show 6 contacts per page.
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'products/products.html',{'products':page_obj})
 
-class ProductListView(ListView):
-    model = Product
-    # paginate_by = 10
-    context_object_name = 'products'
-    template_name ='products/products.html'
+# class ProductListView(ListView):
+#     model = Product
+#     # paginate_by = 10
+#     context_object_name = 'products'
+#     template_name ='products/products.html'
 
 class CreateProductView(CreateView):
     model = Product

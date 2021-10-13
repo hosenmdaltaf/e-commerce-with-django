@@ -2,6 +2,9 @@
 
 {% block content %}
 
+{% include 'products/navbar.html' %}
+
+
  <!-- Product Details -->
  <section class="section product-detail">
     <div class="details container-md">
@@ -43,7 +46,7 @@
 
         <form class="form">
           <input type="text" placeholder="1">
-          <a href="{% url 'cart:cart_add' product_details.id %} class="addCart">Add To Cart</a>
+          <a href="{% url 'orders:add_to_cart' item_id %}" class="addCart">Add To Cart</a>
         </form>
         <h3>Product Detail</h3>
         <p>{{ product_details.description }}</p>

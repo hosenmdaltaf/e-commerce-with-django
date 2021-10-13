@@ -1,0 +1,199 @@
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+{% include 'products/navbar.html' %}
+   
+   <div class="container emp-profile">
+        {% comment %} <form method="post"> {% endcomment %}
+            <div class="row ">
+                <div class="col-md-4">
+                    <div class="profile-img">
+                        <img src="{{ user.profile.profile_picture.url }}" alt=""/>
+                        {% comment %} <div class="file btn btn-lg btn-primary">
+                            Change Photo
+                            <input type="file" name="file"/>
+                        </div> {% endcomment %}
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <div class="profile-head">
+
+                        <div class="profile-first">
+                                <h1 class="mb-3">
+                                    {{profiles.full_name}}
+                                </h1>
+                                  <p class="mb-3">@
+                                    {{profiles.user}} 
+                                </p> 
+                                <h6 class="mb-3">
+                                    {{profiles.bio}}                               
+                                </h6>
+                                <div class="ml-3 mb-5 w-100 ">
+                                    <div class="p-2  d-flex justify-content-between rounded text-white stats ">
+                                        <div class="d-flex flex-column"> <span class="articles">Articles</span> <span class="number1">{{profiles.get_posts_no}}</span> </div>
+                                       
+                                    </div>
+                                
+                                </div>
+                            </div>  
+                    </div>
+                </div>
+
+                 {% if request.user.is_authenticated %}
+                    {% if user.id == profiles.user.id %} 
+                         <div class="col-md-2">
+                         <a href='{% url 'profiles:profile_update' profiles.id %}'>
+                         <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+                         </a>
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+
+              
+            </div>
+            <div class="row">
+                     <!-- Nav tabs -->
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">About</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Articles</button>
+                </li>
+                </ul>
+
+                <div class="col-md-12">
+<!-- Tab panes -->
+<div class="tab-content">
+
+<!-- first child Tab panes -->
+  <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+ 
+                    <div class=" profile-tab" >    
+                                <div class="row">
+
+                                 <h2 class="profile-works">{{profiles.user}}'s detail description</h2>
+
+                                        <div class="col-md-6">
+                                         <label>Email</label>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p> {{profiles.email}} </p>
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Date of fallen love</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p> {{profiles.date_joined}} </p>
+                                        </div>
+                                    </div>
+
+                                       <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Education</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p> {{profiles.educations}} </p>
+                                        </div>
+                                    </div>
+
+                                       <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Loaction</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p> {{profiles.loaction}} </p>
+                                        </div>
+                                    </div>
+
+
+                                    <h2 class="profile-works">Skills</h2>
+                                         <div class="profile-first">
+                                            <h5 style='color:#333' class="mb-3">
+                                                {{profiles.work}}
+                                            </h5>
+                                        </div>
+                                      
+                                               
+                                      <h2 class="profile-works">WORK LINK</h2>          
+                                     
+                                     <div class="profile-first">
+                                            <h5 style='color:#333' class="mb-3">
+                                                {% comment %} {{request.user.profile.sociallink}} {% endcomment %}
+                                            </h5>
+                                    </div>
+                               {% if request.user.is_authenticated %}
+                                    {% if user.id == profiles.user.id %}
+                                            <div class="profile-first">
+                                                <a href="{% url 'profiles:profile_delete' profiles.id %} ">
+                                                <h5 style='color:#red' class="mb-3">Delete Account</h5></a>
+                                            </div>
+                                    {% endif %}
+                               {% endif %}
+
+
+                        </div>
+
+                            <!--finish first Tab panes -->
+                            </div>
+
+                            <!-- second child Tab panes -->
+                            <div class="tab-pane profile-tab" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            
+                                        
+
+                                <!--Card seaction--------------------------------------- #blog.author---------------------------------------------->
+
+                        <div class="container card-seaction ">
+                            <div class="row">
+                            
+                        
+                        {% if profiles.get_all_authors_posts %}
+
+                              {% for post in profiles.get_all_authors_posts %}
+                                <div class="col-md-4">
+                                    <div class="card p-3 m-2 card-type">
+                                        <div class="d-flex flex-row mb-3"><img src="{{ post.author.profile_picture.url }}" width="70">
+                                            <div class="d-flex flex-column ml-2"><span>@{{ post.author }}</span><span class="text-black-50">{{post.post_date|timesince}}</span><span class="ratings"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span></div>
+                                        </div> 
+                                        <a href='{% url 'user_feeds:articale-detail' post.pk %}'>
+                                        <h6>{{ post.title }}</h6>
+                                        </a>
+                                        <div class="d-flex justify-content-between install mt-3"><span>#{{post.category}}</span>
+                                        <a href='{% url 'user_feeds:articale-detail' post.pk %}'>
+                                        <span class="text-primary">View&nbsp;<i class="fa fa-angle-right"></i></span>
+                                        </a>
+                                        </div>
+                                    </div>
+                                </div>
+                             {% endfor %}
+
+                             {% else%}
+                                <p>{{profiles.user}} is not create any post yet!!</p>
+                                
+                             {% endif%}
+
+
+
+                            </div>
+                        </div>
+
+
+            <!--finish second Tab panes -->
+              </div>
+              </div>
+
+            </div>
+
+            </div>
+        {% comment %} </form>            {% endcomment %}
+    </div>
+
+{% endblock %}
