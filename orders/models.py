@@ -3,6 +3,7 @@ from django.db import models
 from django.db import models
 from accounts.models import Profile
 from datetime import datetime
+from django.contrib.auth.models import User
 
 from products.models import Product
 
@@ -20,10 +21,13 @@ class OrderItem(models.Model):
 
 
 class Order(models.Model):
-    owner = models.ForeignKey(Profile, on_delete=models.SET_NULL,null=True)
-    ordered_date = models.DateTimeField(auto_now=True)
+    owner = models.ForeignKey(User, on_delete=models.SET_NULL,null=True)
+    date_added = models.DateTimeField(auto_now=True)
+    ordered_date = models.DateTimeField(null=True)
     is_ordered=models.BooleanField(default=False)
-    items=models.ManyToManyField(OrderItem)
+    # items=models.ManyToManyField(OrderItem)
+    product = models.OneToOneField(Product,on_delete=models.SET_NULL,null=True)
+    quantity = models.IntegerField(default=0)
 
     def get_cart_items(self):
         return self.items.all()
@@ -32,6 +36,6 @@ class Order(models.Model):
         return sum([item.product.price for item in self.items.all()])
     
     def __str__(self):
-        return self.owner
+        return str(self.owner)
     
 

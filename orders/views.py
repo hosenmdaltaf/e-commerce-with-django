@@ -25,16 +25,26 @@ from orders.models import OrderItem, Order
 
 def cart(request, **kwargs):
     # a view signifying the transcation was successful
+    # user=get_object_or_404(Profile, user=request.user)
+    user=request.user
+    print(user)
+    print('---------------------------------------------------------')
+    product_id= request.GET.get('prod_id')
+    product=Product.objects.get(id=product_id)
+    print(product)
+                                                           
     return render(request, 'cart/cart.html', {})
 
 
 
-@login_required()
+# @login_required()
 def add_to_cart(request, **kwargs):
     # get the user profile
     user_profile = get_object_or_404(Profile, user=request.user)
     # filter products by id
     product = Product.objects.filter(id=kwargs.get('item_id', "")).first()
+
+    # print('this is product id:',item_id)
     # check if the user already owns this product
     # if product in request.user.profile.ebooks.all():
     #     messages.info(request, 'You already own this ebook')

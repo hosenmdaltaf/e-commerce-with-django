@@ -44,7 +44,7 @@
                  {% if request.user.is_authenticated %}
                     {% if user.id == profiles.user.id %} 
                          <div class="col-md-2">
-                         <a href='{% url 'profiles:profile_update' profiles.id %}'>
+                         <a href='{% url 'accounts:profile_update' profiles.id %}'>
                          <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
                          </a>
                         </div>
@@ -95,14 +95,7 @@
                                         </div>
                                     </div>
 
-                                       <div class="row">
-                                        <div class="col-md-6">
-                                            <label>Education</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p> {{profiles.educations}} </p>
-                                        </div>
-                                    </div>
+                        
 
                                        <div class="row">
                                         <div class="col-md-6">
@@ -112,27 +105,11 @@
                                             <p> {{profiles.loaction}} </p>
                                         </div>
                                     </div>
-
-
-                                    <h2 class="profile-works">Skills</h2>
-                                         <div class="profile-first">
-                                            <h5 style='color:#333' class="mb-3">
-                                                {{profiles.work}}
-                                            </h5>
-                                        </div>
                                       
-                                               
-                                      <h2 class="profile-works">WORK LINK</h2>          
-                                     
-                                     <div class="profile-first">
-                                            <h5 style='color:#333' class="mb-3">
-                                                {% comment %} {{request.user.profile.sociallink}} {% endcomment %}
-                                            </h5>
-                                    </div>
                                {% if request.user.is_authenticated %}
                                     {% if user.id == profiles.user.id %}
                                             <div class="profile-first">
-                                                <a href="{% url 'profiles:profile_delete' profiles.id %} ">
+                                                <a href="{% url 'accounts:profile_delete' profiles.id %} ">
                                                 <h5 style='color:#red' class="mb-3">Delete Account</h5></a>
                                             </div>
                                     {% endif %}
@@ -151,39 +128,7 @@
 
                                 <!--Card seaction--------------------------------------- #blog.author---------------------------------------------->
 
-                        <div class="container card-seaction ">
-                            <div class="row">
-                            
-                        
-                        {% if profiles.get_all_authors_posts %}
-
-                              {% for post in profiles.get_all_authors_posts %}
-                                <div class="col-md-4">
-                                    <div class="card p-3 m-2 card-type">
-                                        <div class="d-flex flex-row mb-3"><img src="{{ post.author.profile_picture.url }}" width="70">
-                                            <div class="d-flex flex-column ml-2"><span>@{{ post.author }}</span><span class="text-black-50">{{post.post_date|timesince}}</span><span class="ratings"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span></div>
-                                        </div> 
-                                        <a href='{% url 'user_feeds:articale-detail' post.pk %}'>
-                                        <h6>{{ post.title }}</h6>
-                                        </a>
-                                        <div class="d-flex justify-content-between install mt-3"><span>#{{post.category}}</span>
-                                        <a href='{% url 'user_feeds:articale-detail' post.pk %}'>
-                                        <span class="text-primary">View&nbsp;<i class="fa fa-angle-right"></i></span>
-                                        </a>
-                                        </div>
-                                    </div>
-                                </div>
-                             {% endfor %}
-
-                             {% else%}
-                                <p>{{profiles.user}} is not create any post yet!!</p>
-                                
-                             {% endif%}
-
-
-
-                            </div>
-                        </div>
+            
 
 
             <!--finish second Tab panes -->

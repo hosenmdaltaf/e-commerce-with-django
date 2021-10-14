@@ -26,7 +26,7 @@ from django.shortcuts import get_object_or_404
 # @method_decorator(login_required, name='dispatch')
 class ProfileDetailView(DetailView):
     model = Profile
-    # context_object_name = 'profiles'
+    context_object_name = 'profiles'
     template_name = 'accounts/detailpage.html' 
 
     def get_object(self,**kwargs):
