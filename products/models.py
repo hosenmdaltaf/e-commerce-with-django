@@ -33,7 +33,7 @@ class Product(models.Model):
                                  on_delete=models.CASCADE)
     # label = models.CharField(choices=LABEL_CHOICES, max_length=1)
     #feactured
-    # slug = models.SlugField()
+    slug = models.SlugField()
     description = models.TextField()
     image = models.ImageField(upload_to='product_img',default='/static/images/cover.jpg')
     available = models.BooleanField(default=True)

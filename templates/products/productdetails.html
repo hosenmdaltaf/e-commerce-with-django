@@ -31,24 +31,11 @@
         <span>{{product_details.category }}</span>
         <h1>{{ product_details.title }}</h1>
         <div class="price">{{ product_details.price }}</div>
-        <form>
-          <div>
-            <select>
-              <option value="Select Size" selected disabled>Select Size</option>
-              <option value="1">32</option>
-              <option value="2">42</option>
-              <option value="3">52</option>
-              <option value="4">62</option>
-            </select>
-            <span><i class='bx bx-chevron-down'></i></span>
-          </div>
-        </form>
 
-      <form >
-        <input type="hidden" name='prod_id' value={{product_details.pk}}
-        id='prod_id'>
-        <button class="addCart" type="submit" >Add to Cart</button>
-      </form>
+        <form  action="/cart/">
+          <input type="hidden" name='product_id' value={{product_details.pk}} id='product_id'>
+          <button class="addCart" type="submit" >Add to Cart</button>
+        </form>
 
 
      

@@ -9,8 +9,9 @@ from django.core.paginator import Paginator
     
 
 def home(request):
-    products=Product.objects.all()
-    paginator = Paginator( products , 3) # Show 6 contacts per page.
+    products=Product.objects.get_queryset().order_by('id')
+    # products=Product.objects.all()
+    paginator = Paginator( products ,3) # Show 6 contacts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'products/products.html',{'products':page_obj})
