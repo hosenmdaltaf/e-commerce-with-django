@@ -43,18 +43,18 @@
                 </tr>
               </thead>
               <tbody>
-                  {% for cart in carts %}
+                {% for cart in object.items.all %}
                 <tr>
                   <th scope="row" class="border-0">
                     <div class="p-2">
                       <img src="hps://bootstrapiottus.com/i/snippets/sn-cart/product-1.jpg" alt="" width="70" class="img-fluid rounded shadow-sm">
                       <div class="ml-3 d-inline-block align-middle">
-                        <h5 class="mb-0"> <a href="#" class="text-dark d-inline-block align-middle">{{cart.owner.product.title}}</a></h5><span class="text-muted font-weight-normal font-italic d-block">Category: Watches</span>
+                        <h5 class="mb-0"> <a href="#" class="text-dark d-inline-block align-middle">{{cart.item.title}}</a></h5><span class="text-muted font-weight-normal font-italic d-block">Category: Watches</span>
                       </div>
                     </div>
                   </th>
-                  <td class="border-0 align-middle"><strong>{{cart.product.price}}</strong></td>
-                  <td class="border-0 align-middle"><strong>3</strong></td>
+                  <td class="border-0 align-middle"><strong>{{cart.item.price}}</strong></td>
+                  <td class="border-0 align-middle"><strong>{{cart.quantity}}</strong></td>
                   <td class="border-0 align-middle"><a href="#" class="text-dark"><i class='bx bx-x'></i></a></td>
                 </tr>
                 {% endfor %}

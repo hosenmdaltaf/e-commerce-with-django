@@ -5,11 +5,12 @@ from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.contrib.auth.models import User
-from django.views.generic import(
-    DetailView
-)
+# from django.views.generic import(
+#     DetailView
+# )
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
+from django.views.generic import  DetailView, View
 
 from accounts.models import Profile
 from products.models import Product
@@ -59,12 +60,13 @@ def cart(request):
     product=Product.objects.get(id=product_id)
     # create orderItem of the selected product
     order_item,created = OrderItem.objects.get_or_create(item=product,user=request.user,ordered=False)
+    print('cart details', order_item)
 
     order_qs = Order.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():
         order = order_qs[0]
         # check if the order item is in the order
-        if order.items.filter(item__slug=product.id).exists():
+        if order.items.filter(id=product_id).exists():
             order_item.quantity += 1
             order_item.save()
             messages.info(request, "This item quantity was updated.")
@@ -90,29 +92,30 @@ def cart(request):
                         
     return redirect("orders:cart_summary")
 
-    
 
-def cart_summary(request):
-    if request.user.is_authenticated:
-        user=user=get_object_or_404(Profile, user=request.user)
-        carts = Order.objects.filter(user=request.user,ordered=False)
+
+class OrderSummaryView(LoginRequiredMixin, View):
+    def get(self, *args, **kwargs):
+        try:
+            order = Order.objects.get(user=self.request.user, ordered=False)
+            context = {
+                'object': order
+            }
+            return render(self.request, 'cart/cart.html', context)
+        except ObjectDoesNotExist:
+            messages.warning(self.request, "You do not have an active order")
+            return redirect("/")
+
+# def cart_summary(request):
+#     if request.user.is_authenticated:
+#         user=user=get_object_or_404(Profile, user=request.user)
+#         carts = Order.objects.filter(user=request.user,ordered=False)
+#         context={
+#             'carts':carts
+#         }
         
-        print('----------------------------------------------------')
-        print('cart details',carts)
-     
-    return render(request, 'cart/cart.html', {'carts':carts})
+#     return render(request, 'cart/cart.html',context)
 
-# class OrderSummaryView(LoginRequiredMixin, View):
-#     def get(self, *args, **kwargs):
-#         try:
-#             order = Order.objects.get(user=self.request.user, ordered=False)
-#             context = {
-#                 'object': order
-#             }
-#             return render(self.request, 'order_summary.html', context)
-#         except ObjectDoesNotExist:
-#             messages.warning(self.request, "You do not have an active order")
-#             return redirect("/")
 
 
 def success(request, **kwargs):
